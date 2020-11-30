@@ -18,7 +18,6 @@ public class InputNumbers2 extends Genotype {
 		Random random = new Random();
 		int range = 26;// from 0 to 25 inclusive
 		int randInt = random.nextInt(range);
-		// return (char) ((int) (97)+(int)(Math.random()*(121-97)));
 		return (int) (97 + randInt);
 	}
 

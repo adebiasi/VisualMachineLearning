@@ -14,8 +14,7 @@ class RocketFitness implements IFitnessEvaluator{
 		super();
 		this.target=target;
 		this.boundary=boundary;
-		// TODO Auto-generated constructor stub
-	}
+		}
 
 @Override
   public double evaluateFitness(IPhenotype phenotype) {

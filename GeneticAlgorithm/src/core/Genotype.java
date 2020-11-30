@@ -65,7 +65,6 @@ public abstract class Genotype implements IGenotype {
 	@Override
 	public void mutate(double mutationRate) {
 
-		//double mutationRate = 0.01;
 		for (int i = 0; i < genes.size(); i++) {
 
 			if (Math.random() < mutationRate) {
