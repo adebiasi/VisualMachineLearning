@@ -13,17 +13,24 @@ public class GeneticAlgorithm implements IGeneticAlgorithm {
 	int numGenes;
 
 	public GeneticAlgorithm(Class<? extends IGenotype> genotypeClass, int numGenes) {
-		this(genotypeClass, numGenes, CrossoverApproaches.RANDOM_MIDPOINT, 0.01);
+		this(genotypeClass, numGenes, 0.01, CrossoverApproaches.RANDOM_MIDPOINT );
 	}
 
-	public GeneticAlgorithm(Class<? extends IGenotype> genotypeClass, int numGenes, // fitnessFunction,
-			CrossoverApproaches crossoverApproach, double mutationRate) {
+	public GeneticAlgorithm(Class<? extends IGenotype> genotypeClass, int numGenes, 
+			double mutationRate) {
+		this(genotypeClass, numGenes, mutationRate, CrossoverApproaches.RANDOM_MIDPOINT );
+	}
+	
+	public GeneticAlgorithm(Class<? extends IGenotype> genotypeClass, int numGenes, 
+			double mutationRate, CrossoverApproaches crossoverApproach ) {
 		this.genotypeClass = genotypeClass;
 		this.crossoverApproach = crossoverApproach;
 		this.numGenes = numGenes;
 		this.mutationRate = mutationRate;
 	}
 
+	
+	
 	public List<IPhenotype> init(int numPopulation) throws Exception {
 		List<IPhenotype> population = new ArrayList<IPhenotype>();
 		for (int i = 0; i < numPopulation; i++) {
@@ -118,9 +125,9 @@ public class GeneticAlgorithm implements IGeneticAlgorithm {
 
 	private List<Double> evaluateProbability(List<Double> fitnessList) {
 
-		for (Double value : fitnessList) {
+		/*for (Double value : fitnessList) {
 			System.out.println("value: " + value);
-		}
+		}*/
 
 		List<Double> normFitness = new ArrayList<Double>(fitnessList.size());
 
@@ -134,9 +141,9 @@ public class GeneticAlgorithm implements IGeneticAlgorithm {
 			normFitness.add(fitnessList.get(i) / sumValues);
 		}
 
-		for (Double value : normFitness) {
+		/*for (Double value : normFitness) {
 			System.out.println("value dopo: " + value);
-		}
+		}*/
 
 		return normFitness;
 	}
