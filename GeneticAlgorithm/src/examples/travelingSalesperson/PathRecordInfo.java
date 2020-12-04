@@ -1,4 +1,4 @@
-package examples.TravelingSalesperson;
+package examples.travelingSalesperson;
 
 public class PathRecordInfo {
 

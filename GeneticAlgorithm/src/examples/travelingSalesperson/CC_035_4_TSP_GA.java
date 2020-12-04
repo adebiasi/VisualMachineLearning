@@ -1,4 +1,4 @@
-package examples.TravelingSalesperson;
+package examples.travelingSalesperson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +142,7 @@ public class CC_035_4_TSP_GA extends PApplet {
 	}
 
 	public static void main(String[] passedArgs) {
-		String[] appletArgs = new String[] { "examples.TravelingSalesperson.CC_035_4_TSP_GA" };
+		String[] appletArgs = new String[] { "examples.travelingSalesperson.CC_035_4_TSP_GA" };
 		PApplet.main(appletArgs);
 	}
 
