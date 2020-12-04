@@ -17,15 +17,18 @@ class Button {
 	
 	Rectangle r; // Button's rectangle
 	String txt; // Button's text
-	boolean clickedOn; // Did i click on it?
-	boolean rolloverOn; // Did i rollover it?
+	boolean enabled; 
+	boolean clickedOn; 
+	boolean rolloverOn; 
 
 	Button(int x, int y, int w, int h, String s) {
 		r = new Rectangle(x, y, w, h);
 		txt = s;
+		enabled = false;
 	}
 
 	void display(MySketch mySketch) {
+		if(enabled){
 		// Draw rectangle and text based on whether rollover or clicked
 		mySketch.rectMode(PConstants.CORNER);
 		mySketch.stroke(255);
@@ -45,7 +48,13 @@ class Button {
 		mySketch.fill(255, 150);
 		mySketch.textAlign(PConstants.LEFT);
 		mySketch.text(txt, r.x + 10, r.y + 14);
+		}
+	}
 
+	
+	
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	// Methods to check rollover, clicked, or released (must be called from
@@ -67,6 +76,10 @@ class Button {
 
 	void released() {
 		clickedOn = false;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 }

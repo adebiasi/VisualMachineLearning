@@ -110,8 +110,10 @@ public class MySketch extends PApplet {
 				age = age + 1;
 			}
 			// evolve();
-
+			fitnessButton.setEnabled(false);
 			frame++;
+		}else{
+			fitnessButton.setEnabled(true);
 		}
 		show(population);
 		textSize(18);
@@ -128,14 +130,16 @@ public class MySketch extends PApplet {
 
 		if (age >= lifeSpan) {
 
-			if (fitnessButton.clicked(mouseX, mouseY)) {
+			if (fitnessButton.clicked(mouseX, mouseY) && fitnessButton.isEnabled()) {
 				System.out.println("calculateFitness");
 				calculateFitness();
+				newGenButton.setEnabled(true);
 				fitnessButton.released();
 			}
-			if (newGenButton.clicked(mouseX, mouseY)) {
+			if (newGenButton.clicked(mouseX, mouseY) && newGenButton.isEnabled()) {
 				System.out.println("evolve");
 				evolve();
+				newGenButton.setEnabled(false);
 				newGenButton.released();
 			}
 
@@ -146,13 +150,16 @@ public class MySketch extends PApplet {
 				}
 			}
 
+			if(fitnessButton.isEnabled()){
 			for (int i = 0; i < population.size(); i++) {
 				Rocket rocket = ((Rocket) population.get(i));
 				if (rocket.clicked(mouseX, mouseY)) {
+					newGenButton.setEnabled(true);
 					rocket.fitness += 1.0;
 					fitness.set(i, rocket.fitness);
 					rocket.released();
 				}
+			}
 			}
 		}
 	}
