@@ -2,8 +2,6 @@ package examples.TravelingSalesperson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-
 import core.GeneticAlgorithm;
 import core.IPhenotype;
 import processing.core.PApplet;
