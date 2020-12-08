@@ -33,14 +33,18 @@ class Perceptron {
     // Note this can only be 0, -2, or 2
     // Multiply by learning constant
     float error = desired - guess;
-    // Adjust weights based on weightChange * input
-    for (int i = 0; i < weights.length; i++) {
-      weights[i] += c * error * inputs[i];         
-    }
+    updateWeights(inputs, error);
   }
 
+  public void updateWeights(float[] inputs,float error){
+	  // Adjust weights based on weightChange * input
+	    for (int i = 0; i < weights.length; i++) {
+	      weights[i] += c * error * inputs[i];         
+	    }  
+  }
+  
   // Guess -1 or 1 based on input values
-  int feedforward(float[] inputs) {
+  public int feedforward(float[] inputs) {
     // Sum all values
     float sum = 0;
     for (int i = 0; i < weights.length; i++) {
