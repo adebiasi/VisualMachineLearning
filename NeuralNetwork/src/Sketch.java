@@ -43,7 +43,7 @@ public class Sketch extends PApplet {
 
 		// The perceptron has 3 inputs -- x, y, and bias
 		// Second value is "Learning Constant"
-		ptron = new Perceptron(this, 3, 0.000001f); // Learning Constant is low
+		ptron = new Perceptron(this, 3, 0.5f); // Learning Constant is low
 													// just b/c it's fun to
 													// watch, this is not
 													// necessarily optimal

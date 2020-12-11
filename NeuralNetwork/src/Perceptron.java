@@ -37,9 +37,9 @@ class Perceptron {
   }
 
   public void updateWeights(float[] inputs,float error){
-	  // Adjust weights based on weightChange * input
+	  // Adjust weights based on weightChange / input
 	    for (int i = 0; i < weights.length; i++) {
-	      weights[i] += c * error * inputs[i];         
+	      weights[i] += c * error / inputs[i];         
 	    }  
   }
   
