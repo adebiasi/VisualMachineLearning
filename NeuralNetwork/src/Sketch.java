@@ -20,13 +20,15 @@ public class Sketch extends PApplet {
 	Perceptron ptron;
 
 	// We will train the perceptron with one "Point" object at a time
-	//int count = 0;
+	// int count = 0;
 
 	// Coordinate space
 	float xmin = -400;
 	float ymin = -100;
 	float xmax = 400;
 	float ymax = 100;
+
+	boolean newTrainer = false;
 
 	String message = "";
 
@@ -44,26 +46,23 @@ public class Sketch extends PApplet {
 		// The perceptron has 3 inputs -- x, y, and bias
 		// Second value is "Learning Constant"
 		ptron = new Perceptron(this, 3, 0.5f); // Learning Constant is low
-													// just b/c it's fun to
-													// watch, this is not
-													// necessarily optimal
+												// just b/c it's fun to
+												// watch, this is not
+												// necessarily optimal
 
 		// Create a random set of training points and calculate the "known"
 		// answer
-		/*for (int i = 0; i < 2000; i++) {
-			float x = random(xmin, xmax);
-			float y = random(ymin, ymax);
-			int answer = 1;
-			if (y < f(x))
-				answer = -1;
-			training.add(new Trainer(x, y, answer));
-		}*/
+		/*
+		 * for (int i = 0; i < 2000; i++) { float x = random(xmin, xmax); float
+		 * y = random(ymin, ymax); int answer = 1; if (y < f(x)) answer = -1;
+		 * training.add(new Trainer(x, y, answer)); }
+		 */
 		smooth();
 	}
 
 	public void draw() {
 		background(255);
-		//translate(width / 2, height / 2);
+		// translate(width / 2, height / 2);
 
 		// Draw the line
 		drawKnownLine();
@@ -72,48 +71,51 @@ public class Sketch extends PApplet {
 		// Formula is weights[0]*x + weights[1]*y + weights[2] = 0
 		drawGuessedLine();
 
-		if(!training.isEmpty()){
-			
-			Trainer lastTrainer = training.get(training.size()-1);
-		// Train the Perceptron with one "training" point at a time
-		float[] latestInputs = lastTrainer.inputs;
-		// Guess the result
-		int guessAnswer = ptron.feedforward(latestInputs);
-		// Compute the factor for changing the weight based on the error
-		// Error = desired output - guessed output
-		// Note this can only be 0, -2, or 2
-		// Multiply by learning constant
-		int desiredAnswer = lastTrainer.answer;
-		float error = desiredAnswer - guessAnswer;
+		if (!training.isEmpty() & newTrainer) {
 
-		if (error != 0 || message.equals("")) {
-			message = message + "With the weights [" + floatToString(ptron.weights[0]) + ","
-					+ floatToString(ptron.weights[1]) + "," + floatToString(ptron.weights[2])
-					+ "], for the latest inputs, the guess answer is " + guessAnswer + " and the true answer is "
-					+ desiredAnswer + ", so the error is " + error;
+			Trainer lastTrainer = training.get(training.size() - 1);
+			// Train the Perceptron with one "training" point at a time
+			float[] latestInputs = lastTrainer.inputs;
+			// Guess the result
+			int guessAnswer = ptron.feedforward(latestInputs);
+			// Compute the factor for changing the weight based on the error
+			// Error = desired output - guessed output
+			// Note this can only be 0, -2, or 2
+			// Multiply by learning constant
+			int desiredAnswer = lastTrainer.answer;
+			float error = desiredAnswer - guessAnswer;
 
-			if (error > 0) {
-				message = message + ". The weights must be decreased: ";
-			} else if (error < 0) {
-				message = message + ". The weights must be increased: ";
+			if (error != 0 || message.equals("")) {
+				message = message + "With the weights [" + floatToString(ptron.weights[0]) + ","
+						+ floatToString(ptron.weights[1]) + "," + floatToString(ptron.weights[2])
+						+ "], for the latest inputs, the guess answer is " + guessAnswer + " and the true answer is "
+						+ desiredAnswer + ", so the error is " + error;
+
+				if (error > 0) {
+					message = message + ". The weights must be decreased: ";
+				} else if (error < 0) {
+					message = message + ". The weights must be increased: ";
+				}
 			}
-		}
-		// ptron.train(latestInputs,desiredAnswer);
-		ptron.updateWeights(latestInputs, error);
+			// ptron.train(latestInputs,desiredAnswer);
+			ptron.updateWeights(latestInputs, error);
 
-		if (error != 0) {
-			message = message + "[" + floatToString(ptron.weights[0]) + "," + floatToString(ptron.weights[1]) + ","
-					+ floatToString(ptron.weights[2]) + "]\n";
+			if (error != 0) {
+				message = message + "[" + floatToString(ptron.weights[0]) + "," + floatToString(ptron.weights[1]) + ","
+						+ floatToString(ptron.weights[2]) + "]\n";
+			}
+
+			newTrainer = false;
 		}
+
 		// Draw all the points based on what the Perceptron would "guess"
 		// Does not use the "known" correct answer
 		drawPoints();
 
 		pushMatrix();
-		//translate(-width / 2, -height / 2);
+		// translate(-width / 2, -height / 2);
 		text(message, 10, 10);
 		popMatrix();
-		}
 	}
 
 	private String floatToString(float num) {
@@ -130,7 +132,7 @@ public class Sketch extends PApplet {
 
 			strokeWeight(1);
 			fill(0);
-			int guess = ptron.feedforward( training.get(i).inputs);
+			int guess = ptron.feedforward(training.get(i).inputs);
 			if (guess > 0)
 				noFill();
 			int size;
@@ -139,7 +141,7 @@ public class Sketch extends PApplet {
 			} else {
 				size = 9;
 			}
-			ellipse( training.get(i).inputs[0],  training.get(i).inputs[1], size, size);
+			ellipse(training.get(i).inputs[0], training.get(i).inputs[1], size, size);
 		}
 		popMatrix();
 	}
@@ -173,15 +175,17 @@ public class Sketch extends PApplet {
 
 	public void mousePressed() {
 		System.out.println("clicked");
-		//count = (count + 1);
+		// count = (count + 1);
 		message = "";
 		float x = mouseX - width / 2;
 		float y = mouseY - height / 2;
-		
+
 		int answer = 1;
 		if (y < f(x))
 			answer = -1;
 		training.add(new Trainer(x, y, answer));
+
+		newTrainer = true;
 	}
 
 	public static void main(String[] args) {
