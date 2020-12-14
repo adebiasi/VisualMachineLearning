@@ -28,14 +28,16 @@ public class Sketch extends PApplet {
 	float xmax = 400;
 	float ymax = 100;
 
+	int answer = -1;
+	
 	boolean newTrainer = false;
 
 	String message = "";
 
 	// The function to describe a line
-	float f(float x) {
+	/*float f(float x) {
 		return 0.4f * x + 50;
-	}
+	}*/
 
 	public void settings() {
 		size(1200, 800);
@@ -43,12 +45,7 @@ public class Sketch extends PApplet {
 
 	public void setup() {
 
-		// The perceptron has 3 inputs -- x, y, and bias
-		// Second value is "Learning Constant"
-		ptron = new Perceptron(this, 3, 0.5f); // Learning Constant is low
-												// just b/c it's fun to
-												// watch, this is not
-												// necessarily optimal
+		createPerceptron();
 
 		// Create a random set of training points and calculate the "known"
 		// answer
@@ -65,12 +62,14 @@ public class Sketch extends PApplet {
 		// translate(width / 2, height / 2);
 
 		// Draw the line
-		drawKnownLine();
+		//drawKnownLine();
 
 		// Draw the line based on the current weights
 		// Formula is weights[0]*x + weights[1]*y + weights[2] = 0
 		drawGuessedLine();
 
+		drawNextTrainer();
+		
 		if (!training.isEmpty() & newTrainer) {
 
 			Trainer lastTrainer = training.get(training.size() - 1);
@@ -114,8 +113,18 @@ public class Sketch extends PApplet {
 
 		pushMatrix();
 		// translate(-width / 2, -height / 2);
-		text(message, 10, 10);
+		text("Select the trainer answer (1/-1) using the keys \"1\" and \"2\". ", 10, 10);
+		text(message, 10, 30);
 		popMatrix();
+	}
+
+	private void drawNextTrainer() {
+		if(answer>0){
+			noFill();
+		}else{
+			fill(0);
+		}
+		ellipse(mouseX, mouseY, 16, 16);
 	}
 
 	private String floatToString(float num) {
@@ -133,7 +142,8 @@ public class Sketch extends PApplet {
 			strokeWeight(1);
 			fill(0);
 			int guess = ptron.feedforward(training.get(i).inputs);
-			if (guess > 0)
+			//if (guess > 0)
+			if(training.get(i).answer>0)
 				noFill();
 			int size;
 			if (i == training.size() - 1) {
@@ -160,7 +170,7 @@ public class Sketch extends PApplet {
 		popMatrix();
 	}
 
-	private void drawKnownLine() {
+	/*private void drawKnownLine() {
 		pushMatrix();
 		translate(width / 2, height / 2);
 		strokeWeight(4);
@@ -171,7 +181,7 @@ public class Sketch extends PApplet {
 		float y2 = f(x2);
 		line(x1, y1, x2, y2);
 		popMatrix();
-	}
+	}*/
 
 	public void mousePressed() {
 		System.out.println("clicked");
@@ -180,14 +190,32 @@ public class Sketch extends PApplet {
 		float x = mouseX - width / 2;
 		float y = mouseY - height / 2;
 
-		int answer = 1;
+		/*int answer = 1;
 		if (y < f(x))
-			answer = -1;
+			answer = -1;*/
 		training.add(new Trainer(x, y, answer));
 
 		newTrainer = true;
+		
 	}
 
+	public void keyPressed() {
+		System.out.println("Key: "+key);
+		  if (key == '1') {
+			  answer = 1;
+		  } else if (key == '2') {			 
+			  answer = -1;
+		  } else if (key == 'r') {			 
+			  training = new ArrayList<Trainer>();
+			  createPerceptron(); 
+		  }
+		  System.out.println("answer: "+answer);
+	}
+
+	private void createPerceptron() {
+		ptron = new Perceptron(this, 3, 0.5f);
+	}
+	
 	public static void main(String[] args) {
 		String[] appletArgs = new String[] { "Sketch" };
 		PApplet.main(appletArgs);
