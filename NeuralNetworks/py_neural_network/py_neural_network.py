@@ -7,28 +7,21 @@ import scipy.special
 class NeuralNetwork:
 
     # initialise the neural network
-    def __init__(self, inputnodes, hiddennodes, outputnodes, learningrate):
-
+    def __init__(self, input_nodes, hidden_nodes, output_nodes, learning_rate):
         # set number of nodes in each input, hidden, output layer
-        self.inodes = inputnodes
-        self.hnodes = hiddennodes
-        self.onodes = outputnodes
-
-        # learning rate
-        self.lr = learningrate
-
+        self.i_nodes = input_nodes
+        self.h_nodes = hidden_nodes
+        self.o_nodes = output_nodes
         # link weight matrices, wih and who
         # weights inside the arrays are w_i_j, where link is from node i to node j in the next layer
         # w11 w21
         # w12 w22 etc
-        # self.wih = (numpy.random.rand(self.hnodes, self.inodes) - 0.5)
-        # self.who = (numpy.random.rand(self.onodes, self.hnodes) - 0.5)
-        self.wih = numpy.random.normal(0.0, pow(self.hnodes, -0.5), (self.hnodes, self.inodes))
-        self.who = numpy.random.normal(0.0, pow(self.onodes, -0.5), (self.onodes, self.hnodes))
-        
+        self.wih = numpy.random.normal(0.0, pow(self.i_nodes, -0.5), (self.h_nodes, self.i_nodes))
+        self.who = numpy.random.normal(0.0, pow(self.h_nodes, -0.5), (self.o_nodes, self.h_nodes))
+        # learning rate
+        self.lr = learning_rate
         # activation function is the sigmoid function
         self.activation_function = lambda x: scipy.special.expit(x)
-        
         pass
 
     # train the neural network
@@ -44,15 +37,16 @@ class NeuralNetwork:
         final_inputs = numpy.dot(self.who, hidden_outputs)
         # calculate the signals emerging from final output layer
         final_outputs = self.activation_function(final_inputs)
-
         # output layer error is the (target - actual)
         output_errors = targets - final_outputs
         # hidden layer error is the output_errors, split by weights, recombined at hidden nodes
         hidden_errors = numpy.dot(self.who.T, output_errors)
         # update the weights for the links between the hidden and output layers
-        self.who += self.lr * numpy.dot((output_errors * final_outputs * (1.0 - final_outputs)), numpy.transpose(hidden_outputs))
+        self.who += self.lr * numpy.dot((output_errors * final_outputs * (1.0 - final_outputs)),
+                                        numpy.transpose(hidden_outputs))
         # update the weights for the links between the input and hidden layers
-        self.wih += self.lr * numpy.dot((hidden_errors * hidden_outputs * (1.0 - hidden_outputs)), numpy.transpose(inputs))
+        self.wih += self.lr * numpy.dot((hidden_errors * hidden_outputs * (1.0 - hidden_outputs)),
+                                        numpy.transpose(inputs))
         pass
 
     # query the neural network
@@ -67,5 +61,4 @@ class NeuralNetwork:
         final_inputs = numpy.dot(self.who, hidden_outputs)
         # calculate the signals emerging from final output layer
         final_outputs = self.activation_function(final_inputs)
-
         return final_outputs
