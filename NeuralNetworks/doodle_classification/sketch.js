@@ -16,9 +16,9 @@ let rainbows = {};
 let nn;
 
 function preload() {
-  catsData = loadBytes('data/cats1000.bin');
-  trainsData = loadBytes('data/trains1000.bin');
-  rainbowsData = loadBytes('data/rainbows1000.bin');
+  catsData = loadBytes('../datasets/doodles/cats1000.bin');
+  trainsData = loadBytes('../datasets/doodles/trains1000.bin');
+  rainbowsData = loadBytes('../datasets/doodles/rainbows1000.bin');
 }
 
 
