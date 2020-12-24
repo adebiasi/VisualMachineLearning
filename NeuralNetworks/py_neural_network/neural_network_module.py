@@ -5,9 +5,10 @@
 import numpy
 # library for plotting arrays
 import matplotlib.pyplot
+from Cython.Shadow import inline
+
 from dataLoader import DataLoader
 from py_neural_network import NeuralNetwork
-
 
 
 class NeuralNetworkModule:
@@ -119,3 +120,25 @@ class NeuralNetworkModule:
         # calculate the performance score, the fraction of correct answers
         scorecard_array = numpy.asarray(scorecard)
         print("performance = ", scorecard_array.sum() / scorecard_array.size)
+
+    def backquery(self):
+        self.__backquery(self.n, self.output_nodes)
+
+    @staticmethod
+    def __backquery(neural_network, output_nodes):
+        # run the network backwards, given a label, see what image it produces
+
+        # label to test
+        label = 0
+        # create the output signals for this label
+        targets = numpy.zeros(output_nodes) + 0.01
+        # all_values[0] is the target label for this record
+        targets[label] = 0.99
+        print(targets)
+
+        # get image data
+        image_data = neural_network.backquery(targets)
+
+        # plot image data
+        matplotlib.pyplot.imshow(image_data.reshape(28,28), cmap='Greys', interpolation='None')
+        matplotlib.pyplot.show()

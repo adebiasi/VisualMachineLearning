@@ -14,6 +14,8 @@ n_n_module.train()
 #n_n_module.test_mnist_data();
 n_n_module.test_my_own_png()
 
+n_n_module.backquery()
+
 
 
 
