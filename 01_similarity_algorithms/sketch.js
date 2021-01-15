@@ -15,7 +15,7 @@ function preload() {
   console.log('data');
   data = 
     //loadJSON('../datasets/movielens_data/ratings.json');
-    loadJSON('ratings.json');
+    loadJSON('test/ratings.json');
   console.log('data:'+data);
 }
 
