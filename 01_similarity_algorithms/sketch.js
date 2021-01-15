@@ -12,7 +12,11 @@ var ratings;
 
 // Preload all the data
 function preload() {
-  data = loadJSON('../datasets/movielens_data/ratings.json');
+  console.log('data');
+  data = 
+    //loadJSON('../datasets/movielens_data/ratings.json');
+    loadJSON('ratings.json');
+  console.log('data:'+data);
 }
 
 function setup() {
