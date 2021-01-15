@@ -14,8 +14,8 @@ var ratings;
 function preload() {
   console.log('data');
   data = 
-    //loadJSON('../datasets/movielens_data/ratings.json');
-    loadJSON('test/small_ratings.json');
+    loadJSON('../datasets/movielens_data/small_ratings.json');
+    //loadJSON('test/small_ratings.json');
   console.log('data:'+data);
 }
 
