@@ -143,3 +143,9 @@ function draw() {
 function translateMIDI(note) {
   return pow(2, ((note - 69) / 12.0)) * 440;
 }
+
+function mouseClicked(){
+   if (getAudioContext().state !== 'running') {
+    getAudioContext().resume();
+  }
+}
