@@ -18,8 +18,3 @@ Neural Network stuff:
 - [Doodle Classification](https://adebiasi.github.io/NatureOfCode/NeuralNetworks/doodle_classification_p5/)
 - [Guess numbers](https://adebiasi.github.io/NatureOfCode/NeuralNetworks/mnist_p5/)
 - [Guess XOR](https://adebiasi.github.io/NatureOfCode/NeuralNetworks/xor_p5/)
-
-Chaos:
-- [Bouncing chaos](https://adebiasi.github.io/NatureOfCode/Bouncing_chaos/)
-- [Bifurcation diagram](https://adebiasi.github.io/NatureOfCode/chaos/)
-- [Chaos vs random](https://adebiasi.github.io/NatureOfCode/chaos_vs_random/)
